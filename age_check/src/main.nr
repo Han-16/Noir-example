@@ -8,10 +8,28 @@ fn main(age: Field, nonce: Field, min_age: pub Field, commitment: pub Field) {
 }
 
 #[test]
-fn test_main() {
+fn test_valid_age_and_commitment() {
     let age = 26;
     let nonce = 123;
     let min_age = 20;
-    let commitment = hash([age, nonce], 2); // 0x2f683e77989e13752c0ebd3f86a1bb6422424e05007c3d34336c765b432251f0
+    let commitment = hash([age, nonce], 2);
+    main(age, nonce, min_age, commitment);
+}
+
+#[test(should_fail)]
+fn test_invalid_age_too_young() {
+    let age = 18; // too young
+    let nonce = 123;
+    let min_age = 20;
+    let commitment = hash([age, nonce], 2);
+    main(age, nonce, min_age, commitment);
+}
+
+#[test(should_fail)]
+fn test_invalid_commitment() {
+    let age = 26;
+    let nonce = 123;
+    let min_age = 20;
+    let commitment = hash([age, nonce + 1], 2);
     main(age, nonce, min_age, commitment);
 }
