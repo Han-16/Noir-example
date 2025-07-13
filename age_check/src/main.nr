@@ -18,7 +18,7 @@ fn test_valid_age_and_commitment() {
 
 #[test(should_fail)]
 fn test_invalid_age_too_young() {
-    let age = 18; // too young
+    let age = 18;
     let nonce = 123;
     let min_age = 20;
     let commitment = hash([age, nonce], 2);
